@@ -4,17 +4,16 @@
 
 class Car
 {
-    private $name;
-    private $number;
-    private $color;
+    protected $name;
+    protected $number;
+    protected $color;
     
 
-    public function __construct($name,$number,$color)
+    public function __construct($name, $number, $color)
     {
         $this ->name = $name;
         $this ->number = $number;
         $this ->color = $color;
-        
     }
     
     public function getName()
@@ -48,46 +47,62 @@ class Car
     {
         echo '車の車種:' .$this->name .'、車体番号:'. $this->number . '、カラー:' . $this->color .'です。';
     }
-
+ 
 }
 
 
+class Taxi extends Car
+{
+    private $passenger;
+    
+    public function lower($lower)
+    {
+        if ($this->passenger >= $lower){
+            echo $lower .'人降車しました。';
+            $this->passenger -= $lower;
+        }else{
+            echo '降車人数に誤りがあります。';
+        }
+        
+    }
+    
+    public function pickUp($pickUp)
+    {
+        $this->passenger += $pickUp;
+        echo '乗車人数は'. $pickUp  .'人です。';
+    }
+
+    public function infomation()
+    {
+        echo '車の車種:' . $this->name . '、車体番号:' . $this->number . '、カラー:' . $this->color . '、';
+    }
+    
+}
+    
+    
 // 以下を実行した時にエラーがでないようにして下さい。
 // Carクラスのインスタンスを生成
 // 引数 : 車名、車体番号、カラー
 $car1 = new Car('ランクル', 100, 'black');
 
-// 車名(車種)を取得
-echo $car1->getName();
-echo '<br>';
-
-// 車体番号を取得
-echo $car1->getNumber();
-echo '<br>';
-
-// カラーを取得
-echo $car1->getColor();
-echo '<br>';
-
 // 車の情報表示を表示
 echo $car1->infomation();
 echo '<br>';
+echo '<hr>';
 
-// 車名(車種)を更新
-$car1->setName('アルファード');
-echo $car1->getName();
+
+// Taxiクラスのインスタンスを生成
+$taxi1 = new Taxi('クラウンのタクシー', 222, 'black');
+
+
+// タクシーの情報表示を表示
+echo $taxi1->infomation();
+echo '<br>';
+// 3人乗車
+$taxi1->pickUp(3);
+// 一人降車
+$taxi1->lower(2);
+// 2人降車
+$taxi1->lower(5000);
 echo '<br>';
 
-// 車体番号を取得
-$car1->setNumber(200);
-echo $car1->getNumber();
-echo '<br>';
-
-// カラーを取得
-$car1->setColor('red');
-echo $car1->getColor();
-echo '<br>';
-
-// 車の情報表示を表示
-echo $car1->infomation();
-echo '<br>';
